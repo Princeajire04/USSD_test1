@@ -9,6 +9,15 @@ $networkCode = $_GET["networkCode"] ?? "";
 $phoneNumber = $_GET["phoneNumber"] ?? "";
 $text        = $_GET["text"] ?? "999";
 
+
+if ($sessionId == "") {
+    $sessionId   = $_POST["sessionId"] ?? "";
+    $serviceCode = $_POST["serviceCode"] ?? "";
+    $networkCode = $_POST["networkCode"] ?? "";
+    $phoneNumber = $_POST["phoneNumber"] ?? "";
+    $text        = $_POST["text"] ?? "998";
+}
+
 function stripNonNumeric($input) {
     // Use preg_replace to remove anything that's not a digit
     return preg_replace('/\D/', '', $input);
