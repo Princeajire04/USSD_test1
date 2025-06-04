@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  ussd_app:
+    build: .
+    volumes: 
+      - ./scr:/var/www/html/ 
+    ports:
+      - 80:80
+  ussd_database:
+    image: mysql
+    volumes: 
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password2$
+      MYSQL_DATABASE: ussd_db
+    ports:
+      - 3306:3306
