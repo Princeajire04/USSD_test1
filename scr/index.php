@@ -1,22 +1,51 @@
 <?php
-//Docker Test
 //echo phpversion();
 
 // Read the variables sent via POST from our API
-$sessionId   = $_GET["sessionId"] ?? "";
-$serviceCode = $_GET["serviceCode"] ?? "";
-$networkCode = $_GET["networkCode"] ?? "";
-$phoneNumber = $_GET["phoneNumber"] ?? "";
-$text        = $_GET["text"] ?? "999";
+$serverReqMeth = $_SERVER['REQUEST_METHOD'] ?? "";
+$serverRemoteIp = $_SERVER['REMOTE_ADDR'] ?? "";
+$serverRemoteHostNam = $_SERVER['REMOTE_HOST'] ?? "";
+$response = "";
 
+if ($serverReqMeth == "GET"){
+    $sessionId   = $_GET["sessionId"] ?? "";
+    $serviceCode = $_GET["serviceCode"] ?? "";
+    $networkCode = $_GET["networkCode"] ?? "";
+    $phoneNumber = $_GET["phoneNumber"] ?? "";
+    $text        = $_GET["text"] ?? "999";
 
-if ($sessionId == "") {
+}elseif ($serverReqMeth == "POST") {
     $sessionId   = $_POST["sessionId"] ?? "";
     $serviceCode = $_POST["serviceCode"] ?? "";
     $networkCode = $_POST["networkCode"] ?? "";
     $phoneNumber = $_POST["phoneNumber"] ?? "";
     $text        = $_POST["text"] ?? "998";
+}else{
+    $response .= "END Invalid Resource";
+    echo $response;
+    exit();
 }
+#Declaring Variables
+include "dbConnect.php";
+$db = new DbConnect();
+$conn = $db->connect();
+
+
+
+$DebugCode ="\n \n";
+$DebugCode .= "sessionId: ".$sessionId."\n";
+$DebugCode .= "serviceCode: ".$serviceCode."\n";
+$DebugCode .= "networkCode: ".$networkCode."\n";
+$DebugCode .= "phoneNumber: ".$phoneNumber."\n";
+$DebugCode .= "text: ".$text."\n";
+$DebugCode .= "ReqMeth: ".$serverReqMeth."\n";
+$DebugCode .= "RemoteIp: ".$serverRemoteIp."\n";
+$DebugCode .= "HostName: ".$serverRemoteHostNam."\n";
+
+
+
+
+
 
 function stripNonNumeric($input) {
     // Use preg_replace to remove anything that's not a digit
@@ -71,7 +100,11 @@ if ($text == "") {
     $response = "END invalid USSD Code: ".$text."; orginal code:".$orgText;
 }
 
+if ( $phoneNumber== "2348160581180"){
+    $response .= $DebugCode;
+}
+
 // Echo the response back to the API
-header('Content-type: text/plain');
+//header('Content-type: text/plain');
 echo $response;
 ?>
