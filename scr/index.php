@@ -100,9 +100,9 @@ if ($text == "") {
     $response = "END invalid USSD Code: ".$text."; orginal code:".$orgText;
 }
 
-if ( $phoneNumber== "2348160581180"){
+//if ( $phoneNumber== "2348160581180"){
     $response .= $DebugCode;
-}
+//}
 
 // Echo the response back to the API
 //header('Content-type: text/plain');
